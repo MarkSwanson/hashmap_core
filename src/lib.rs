@@ -10,6 +10,8 @@
 
 //! Unordered containers, implemented as hash-tables
 
+#![feature(lang_items)]
+
 #![no_std]
 #![cfg_attr(
     not(feature = "disable"),
@@ -51,3 +53,9 @@ pub use fnv::FnvHashSet;
 pub use map::HashMap;
 #[cfg(not(feature = "disable"))]
 pub use set::HashSet;
+
+#[lang = "oom"]
+fn oom() -> ! {
+    panic!("oom")
+}
+

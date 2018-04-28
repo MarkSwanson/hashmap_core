@@ -11,7 +11,8 @@
 use self::Entry::*;
 use self::VacantEntryState::*;
 
-use alloc::{Alloc, CollectionAllocErr, Global};
+use oom;
+use alloc::{CollectionAllocErr};
 use core::borrow::Borrow;
 use core::cmp::max;
 use core::fmt::{self, Debug};
@@ -784,7 +785,7 @@ where
     pub fn reserve(&mut self, additional: usize) {
         match self.try_reserve(additional) {
             Err(CollectionAllocErr::CapacityOverflow) => panic!("capacity overflow"),
-            Err(CollectionAllocErr::AllocErr) => Global.oom(),
+            Err(CollectionAllocErr::AllocErr) => oom(),
             Ok(()) => { /* yay */ }
         }
     }
